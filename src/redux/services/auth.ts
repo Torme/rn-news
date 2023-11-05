@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { LoginReturnType } from '../models/api';
+import { LoginReturnType } from '../models/auth';
 
 const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://nodejs-serverless-funct-pablogiraud-carrier-epitecheus-projects.vercel.app/' }),
   endpoints: (builder) => ({
     login: builder.query<LoginReturnType, { username: string, password: string }>({
       query: (body) => ({

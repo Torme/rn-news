@@ -1,34 +1,38 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from '../../screens/Home';
+import { useSelector } from 'react-redux';
+import { selectIsUserSignedIn } from '../../redux/selectors/user';
 import Login from '../../screens/Login';
 import { RouteName } from '../models/common';
 import { RootStackParamList } from '../models/root';
+import StackNavigationArticles from './StackNavigationArticles';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-interface StackNavigationRootProps {
-  signedIn: boolean;
-}
+const StackNavigationRoot = () => {
+  const signedIn = useSelector(selectIsUserSignedIn);
 
-const StackNavigationRoot: React.FC<StackNavigationRootProps> = (props) => (
-  <Stack.Navigator
-    initialRouteName={props.signedIn ? RouteName.HOME : RouteName.LOGIN}
-    screenOptions={{
-      headerShown: false,
-    }}
-  >
-    <Stack.Screen
-      name={RouteName.LOGIN}
-      component={Login}
-      options={{
-        title: 'Login',
-      }}
-    />
-    <Stack.Screen
-      name={RouteName.HOME}
-      component={Home}
-    />
-  </Stack.Navigator>
-);
+  console.log(signedIn);
+  return (
+    <Stack.Navigator
+      initialRouteName={signedIn ? RouteName.HOME : RouteName.LOGIN}
+    >
+      <Stack.Screen
+        name={RouteName.LOGIN}
+        component={Login}
+        options={{
+          title: 'Login',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name={RouteName.HOME}
+        component={StackNavigationArticles}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 export default StackNavigationRoot;

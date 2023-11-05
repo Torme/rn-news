@@ -2,4 +2,6 @@
 export enum RouteName {
   LOGIN = 'Login',
   HOME = 'Home',
+  ALLPOSTS = 'Articles',
+  POSTDETAIL = 'PostDetail',
 }

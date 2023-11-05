@@ -1,34 +1,70 @@
-import { QueryStatus } from '@reduxjs/toolkit/query';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Eye, EyeOff } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
-import { useEffect, useState } from 'react';
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { TextInput } from 'react-native/types';
+import { useDispatch } from 'react-redux';
 import {
   Button,
-  H2,
-  Input,
   Spacer,
   XStack,
   YStack,
 } from 'tamagui';
 
+import CustomInput from '../components/CustomInput';
+import RNNewsLogo from '../components/RNNewsLogo';
 import { SPACING } from '../constants';
+import { RouteName } from '../navigations/models/common';
+import { RootStackParamList } from '../navigations/models/root';
 import { useLazyLoginQuery } from '../redux/services/auth';
+import { setUser } from '../redux/slices/user';
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const [login, { data, error}] = useLazyLoginQuery();
+  const inputPasswordRef = useRef<TextInput>(null);
+  const inputUsernameRef = useRef<TextInput>(null);
+
+  const isButtonDisabled = useMemo(() => (
+    !username || !password
+  ), [username, password]);
+
+  const [login, { data, error }] = useLazyLoginQuery();
 
   const toastController = useToastController();
 
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (error) {
-      toastController.show(error.data.message, { error: true, native: true });
+    console.log(error);
+    if (error && 'data' in error) {
+      const errorData = error.data as { message: string };
+
+      toastController.show(errorData.message, { error: true });
+    } else if (data) {
+      toastController.show(data.message);
+      dispatch(setUser({ username }));
+      resetInputs();
+      navigation.navigate(RouteName.HOME);
     }
   }, [data, error]);
+
+  const resetInputs = () => {
+    inputPasswordRef.current?.clear();
+    inputUsernameRef.current?.clear();
+    setUsername('');
+    setPassword('');
+  };
 
   const onEyePressIn = () => {
     setPasswordVisible(true);
@@ -52,43 +88,42 @@ const Login = () => {
       padding={SPACING}
     >
       <SafeAreaView>
-        <XStack justifyContent="center">
-          <H2 color="$blue10" textAlign="center">RN</H2>
-          <H2 color="black" textAlign="center">News </H2>
-        </XStack>
+        <RNNewsLogo />
         <Spacer size={SPACING * 2} />
-        <Input
+        <CustomInput
+          ref={inputUsernameRef}
           placeholder="Username"
-          placeholderTextColor="$gray9"
-          backgroundColor="$blue2"
-          color="black"
           mb={SPACING}
           onChangeText={setUsername}
+          onSubmitEditing={() => inputPasswordRef.current?.focus()}
         />
         <XStack>
-          <Input
+          <CustomInput
+            ref={inputPasswordRef}
             placeholder="Password"
-            placeholderTextColor="$gray9"
-            backgroundColor="$blue2"
-            color="black"
+            flex={1}
             mb={SPACING * 2}
             secureTextEntry={!passwordVisible}
-            flex={1}
             mr={SPACING}
             onChangeText={setPassword}
+            hoverStyle={{ borderColor: '$blue10' }}
+            onSubmitEditing={onLoginPress}
           />
           <Button
-            variant="outlined"
-            icon={passwordVisible ? <EyeOff size="$1" /> : <Eye size="$1" />}
+            backgroundColor="$blue10"
+            icon={passwordVisible ? <EyeOff size="$1" color="#fff" /> : <Eye size="$1" color="#fff" />}
             onPressIn={onEyePressIn}
             onPressOut={onEyePressOut}
           />
         </XStack>
         <Button
-          color="white"
+          color="#fff"
           backgroundColor="$blue10"
           pressStyle={{ backgroundColor: '$blue9' }}
           onPress={onLoginPress}
+          disabled={isButtonDisabled}
+          opacity={isButtonDisabled ? 0.2 : 1}
+          animation="100ms"
         >
           Login
         </Button>
