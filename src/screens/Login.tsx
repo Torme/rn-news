@@ -46,7 +46,6 @@ const Login = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(error);
     if (error && 'data' in error) {
       const errorData = error.data as { message: string };
 
@@ -92,7 +91,7 @@ const Login = () => {
         <Spacer size={SPACING * 2} />
         <CustomInput
           ref={inputUsernameRef}
-          placeholder="Username"
+          placeholder="Username (Admin)"
           mb={SPACING}
           onChangeText={setUsername}
           onSubmitEditing={() => inputPasswordRef.current?.focus()}
@@ -100,7 +99,7 @@ const Login = () => {
         <XStack>
           <CustomInput
             ref={inputPasswordRef}
-            placeholder="Password"
+            placeholder="Password (password)"
             flex={1}
             mb={SPACING * 2}
             secureTextEntry={!passwordVisible}

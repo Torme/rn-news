@@ -41,6 +41,8 @@ const defaultProps = {
 };
 
 const PostManager: React.FC<PostManagerProps> = (props) => {
+  const [newKey, setNewKey] = useState(false);
+
   const [page, setPage] = useState(1);
   const [scrollStarted, setScrollStarted] = useState(false);
 
@@ -58,13 +60,13 @@ const PostManager: React.FC<PostManagerProps> = (props) => {
     topHeadlinesResult,
   ] = useLazyGetTopHeadlinesArticlesQuery();
 
-  const data = useMemo(() => (
-    props.search !== '' ? allArticlesResult.data : topHeadlinesResult.data
-  ), [props.search !== '', allArticlesResult.data, topHeadlinesResult.data]);
-  const isError = useMemo(() => (
-    props.search !== '' ? allArticlesResult.isError : topHeadlinesResult.isError
-  ), [props.search !== '', allArticlesResult.isError, topHeadlinesResult.isError]);
-  const isEndReached = useMemo(() => data && data.totalResults <= data.articles.length, [data]);
+  const result = useMemo(() => (
+    props.search !== '' ? allArticlesResult : topHeadlinesResult
+  ), [props.search !== '', allArticlesResult, topHeadlinesResult]);
+
+  const isEndReached = useMemo(() => (
+    result.data && result.data.totalResults <= result.data.articles.length
+  ), [result.data]);
 
   const safeAreaInsets = useSafeAreaInsets();
 
@@ -72,25 +74,33 @@ const PostManager: React.FC<PostManagerProps> = (props) => {
     dispatch(articlesApi.util.resetApiState());
     if (page !== 1) {
       setPage(1);
-    } else if (props.search !== '') {
-      console.log('START LOADING SEARCH');
-      getNextAllArticlesBySearchQuery({ page: 1, search: props.search })
-        .catch(console.warn);
     } else {
-      getNextTopHeadlinesArticlesQuery({ page: 1 })
-        .catch(console.warn);
+      runQuery();
     }
   }, [props.search]);
 
   useEffect(() => {
+    runQuery();
+  }, [page, newKey]);
+
+  /* API limited to 100 requests per day.
+   * This is a workaround to double the limit with a second API key.
+  */
+  useEffect(() => {
+    if (result.error && 'status' in result.error && result.error?.status === 429) {
+      setNewKey(!newKey);
+    }
+  }, [result.error]);
+
+  const runQuery = () => {
     if (props.search !== '') {
-      getNextAllArticlesBySearchQuery({ page, search: props.search })
+      getNextAllArticlesBySearchQuery({ page, search: props.search, newKey })
         .catch(console.warn);
     } else {
-      getNextTopHeadlinesArticlesQuery({ page })
+      getNextTopHeadlinesArticlesQuery({ page, newKey })
         .catch(console.warn);
     }
-  }, [page]);
+  };
 
   const handleScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (!scrollStarted
@@ -120,15 +130,15 @@ const PostManager: React.FC<PostManagerProps> = (props) => {
     setPage(page + 1);
   };
 
-  if (!data && !isError) {
+  if (!result.data && !result.isError) {
     return (
       <Stack flex={1} justifyContent="center" alignContent="center">
         <Spinner />
       </Stack>
     );
   }
-  if (isError) {
-    console.warn(isError);
+  if (result.isError) {
+    console.warn(result.error);
     return (
       <Stack
         flex={1}
@@ -151,7 +161,7 @@ const PostManager: React.FC<PostManagerProps> = (props) => {
     >
       <FlatList
         ref={flatList}
-        data={data.articles}
+        data={result.data.articles}
         keyExtractor={(item) => item.url}
         renderItem={({ item }) => (
           <Post article={item} />
