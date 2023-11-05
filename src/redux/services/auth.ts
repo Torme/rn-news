@@ -3,13 +3,13 @@ import { LoginReturnType } from '../models/auth';
 
 const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://nodejs-serverless-funct-pablogiraud-carrier-epitecheus-projects.vercel.app/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://rn-news-pablogiraud-carrier-epitecheus-projects.vercel.app' }),
   endpoints: (builder) => ({
     login: builder.query<LoginReturnType, { username: string, password: string }>({
       query: (body) => ({
         url: '/login',
         method: 'POST',
-        body: JSON.stringify(body),
+        body,
       }),
     }),
   }),
