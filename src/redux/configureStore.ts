@@ -1,35 +1,17 @@
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { persistReducer, Storage } from 'redux-persist';
+import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
-import { MMKV } from 'react-native-mmkv';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import authApi from './services/auth';
 import articlesApi from './services/articles';
 import user from './slices/user';
 import { UserState } from './models/user';
 
-const storage = new MMKV();
-
-export const mmkvStorage: Storage = {
-  setItem: (key: string, value: string) => {
-    storage.set(key, value);
-    return Promise.resolve(true);
-  },
-  getItem: (key: string) => {
-    const value = storage.getString(key);
-
-    return Promise.resolve(value);
-  },
-  removeItem: (key: string) => {
-    storage.delete(key);
-    return Promise.resolve();
-  },
-};
-
 const persistConfig = {
   key: 'user',
-  storage: mmkvStorage,
+  storage: AsyncStorage,
   whitelist: ['user'],
 };
 

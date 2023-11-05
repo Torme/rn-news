@@ -11,7 +11,7 @@ type PostDetailProps = NativeStackScreenProps<ArticlesStackParamList, RouteName.
 const PostDetail: React.FC<PostDetailProps> = (props) => (
   <YStack flex={1}>
     <WebView
-      source={{ uri: props.route.params?.article.url }}
+      source={{ uri: props.route.params?.article.url, cache: true }}
       style={styles.webView}
     />
   </YStack>
