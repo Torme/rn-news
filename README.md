@@ -33,7 +33,7 @@ To start the development server for your project, run the following command:
 ```bash
 npx expo
 ```
-This command will start the Expo development server and open a web page in your default browser. From there, you can run your app on a simulator/emulator or a physical device using the Expo Go app.
+This command will start the Expo development server. From there, you can run your app on a simulator/emulator or a physical device using the Expo Go app.
 
 ### Step 4: Set Up a Simulator/Emulator or Physical Device
 
