@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HeaderRight from '../../components/HeaderRight';
 import RNNewsLogo from '../../components/RNNewsLogo';
 
+import AllPosts from '../../screens/AllPosts';
 import Home from '../../screens/Home';
 import PostDetail from '../../screens/PostDetail';
 import { ArticlesStackParamList } from '../models/articles';
@@ -11,7 +12,7 @@ const Stack = createNativeStackNavigator<ArticlesStackParamList>();
 
 const StackNavigationArticles = () => (
   <Stack.Navigator
-    initialRouteName={RouteName.ALLPOSTS}
+    initialRouteName={RouteName.HOME}
     screenOptions={{
       headerStyle: {
         backgroundColor: 'hsl(206, 100%, 99.2%)',
@@ -24,8 +25,15 @@ const StackNavigationArticles = () => (
     }}
   >
     <Stack.Screen
-      name={RouteName.ALLPOSTS}
+      name={RouteName.HOME}
       component={Home}
+      options={{
+        headerTitle: RNNewsLogo,
+      }}
+    />
+    <Stack.Screen
+      name={RouteName.ALLPOSTS}
+      component={AllPosts}
       options={{
         headerTitle: RNNewsLogo,
       }}

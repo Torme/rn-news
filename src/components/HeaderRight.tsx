@@ -13,7 +13,7 @@ const HeaderRight = () => {
 
   const onLogoutPress = () => {
     dispatch(clearUser());
-    navigation.navigate(RouteName.LOGIN);
+    navigation.reset({ index: 0, key: null, routes: [{ name: RouteName.LOGIN }] });
   };
 
   return (

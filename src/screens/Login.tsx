@@ -1,5 +1,5 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Eye, EyeOff } from '@tamagui/lucide-icons';
+import { ArrowRightToLine, Eye, EyeOff } from '@tamagui/lucide-icons';
 import { useToastController } from '@tamagui/toast';
 import {
   useEffect,
@@ -11,11 +11,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native/types';
 import { useDispatch } from 'react-redux';
 import {
-  Button,
   Spacer,
   XStack,
   YStack,
 } from 'tamagui';
+import CustomButton from '../components/CustomButton';
 
 import CustomInput from '../components/CustomInput';
 import RNNewsLogo from '../components/RNNewsLogo';
@@ -54,7 +54,7 @@ const Login = () => {
       toastController.show(data.message);
       dispatch(setUser({ username }));
       resetInputs();
-      navigation.navigate(RouteName.HOME);
+      navigation.navigate(RouteName.SIGNEDIN);
     }
   }, [data, error]);
 
@@ -108,24 +108,20 @@ const Login = () => {
             hoverStyle={{ borderColor: '$blue10' }}
             onSubmitEditing={onLoginPress}
           />
-          <Button
-            backgroundColor="$blue10"
+          <CustomButton
             icon={passwordVisible ? <EyeOff size="$1" color="#fff" /> : <Eye size="$1" color="#fff" />}
             onPressIn={onEyePressIn}
             onPressOut={onEyePressOut}
           />
         </XStack>
-        <Button
-          color="#fff"
-          backgroundColor="$blue10"
-          pressStyle={{ backgroundColor: '$blue9' }}
+        <CustomButton
           onPress={onLoginPress}
           disabled={isButtonDisabled}
           opacity={isButtonDisabled ? 0.2 : 1}
-          animation="100ms"
+          icon={<ArrowRightToLine />}
         >
           Login
-        </Button>
+        </CustomButton>
       </SafeAreaView>
     </YStack>
   );

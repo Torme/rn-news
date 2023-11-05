@@ -7,6 +7,7 @@ import { MMKV } from 'react-native-mmkv';
 import authApi from './services/auth';
 import articlesApi from './services/articles';
 import user from './slices/user';
+import { UserState } from './models/user';
 
 const storage = new MMKV();
 
@@ -50,7 +51,7 @@ const store = configureStore({
     .concat(thunk),
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = { user: UserState };
 export type AppDispatch = typeof store.dispatch;
 
 export default store;

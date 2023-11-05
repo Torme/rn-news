@@ -11,10 +11,9 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const StackNavigationRoot = () => {
   const signedIn = useSelector(selectIsUserSignedIn);
 
-  console.log(signedIn);
   return (
     <Stack.Navigator
-      initialRouteName={signedIn ? RouteName.HOME : RouteName.LOGIN}
+      initialRouteName={signedIn ? RouteName.SIGNEDIN : RouteName.LOGIN}
     >
       <Stack.Screen
         name={RouteName.LOGIN}
@@ -25,7 +24,7 @@ const StackNavigationRoot = () => {
         }}
       />
       <Stack.Screen
-        name={RouteName.HOME}
+        name={RouteName.SIGNEDIN}
         component={StackNavigationArticles}
         options={{
           headerShown: false,
