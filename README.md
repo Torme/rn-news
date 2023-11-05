@@ -80,9 +80,6 @@ The Vercel server is running at https://rn-news-pablogiraud-carrier-epitecheus-p
 
 # Status of the project
 
-The project is at its first version, and presents the main features.
-The API is very simple and doesn't use any database, and would need to be remade for a advanced version of the project.
-
 To do:
 - [ ] Fix `onScrollToTopPress` (the scroll doesn't to the very top of the list)
 - [ ] Add a loading state to the Login button
