@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import HeaderRight from '../../components/HeaderRight';
 import RNNewsLogo from '../../components/RNNewsLogo';
-
 import AllPosts from '../../screens/AllPosts';
 import Home from '../../screens/Home';
 import PostDetail from '../../screens/PostDetail';

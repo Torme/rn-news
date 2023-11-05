@@ -15,8 +15,8 @@ import {
   XStack,
   YStack,
 } from 'tamagui';
-import CustomButton from '../components/CustomButton';
 
+import CustomButton from '../components/CustomButton';
 import CustomInput from '../components/CustomInput';
 import RNNewsLogo from '../components/RNNewsLogo';
 import { SPACING } from '../constants';

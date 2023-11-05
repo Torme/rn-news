@@ -45,9 +45,7 @@ const AllPosts: React.FC<AllPostsProps> = (props) => {
       justifyContent="center"
       alignContent="center"
     >
-      <PostManager
-        search={search}
-      />
+      <PostManager search={search} />
     </Stack>
   );
 };

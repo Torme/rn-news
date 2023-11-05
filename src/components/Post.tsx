@@ -9,10 +9,10 @@ import {
   XStack,
   H4,
 } from 'tamagui';
+
 import { SPACING, WIN } from '../constants';
 import { ArticlesStackParamList } from '../navigations/models/articles';
 import { RouteName } from '../navigations/models/common';
-
 import { Article } from '../redux/models/articles';
 
 interface PostProps {
@@ -43,7 +43,11 @@ const Post: React.FC<PostProps> = (props) => {
         paddingBottom={props.article.urlToImage ? SPACING / 2 : SPACING}
       >
         <XStack justifyContent="space-between">
-          <XStack alignItems="center" gap={SPACING / 2} mb={SPACING / 2}>
+          <XStack
+            alignItems="center"
+            gap={SPACING / 2}
+            mb={SPACING / 2}
+          >
             <UserCircle size="$1" />
             <Text numberOfLines={1} ellipse>{props.article.author}</Text>
           </XStack>

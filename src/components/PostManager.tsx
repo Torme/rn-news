@@ -42,7 +42,6 @@ const defaultProps = {
 
 const PostManager: React.FC<PostManagerProps> = (props) => {
   const [newKey, setNewKey] = useState(false);
-
   const [page, setPage] = useState(1);
   const [scrollStarted, setScrollStarted] = useState(false);
 
@@ -83,8 +82,8 @@ const PostManager: React.FC<PostManagerProps> = (props) => {
     runQuery();
   }, [page, newKey]);
 
-  /* API limited to 100 requests per day.
-   * This is a workaround to double the limit with a second API key.
+  /* The NewsAPI is limited to 100 requests per day.
+   * This is a workaround to double the limit with a second API key for testing purpose.
   */
   useEffect(() => {
     if (result.error && 'status' in result.error && result.error?.status === 429) {
@@ -138,7 +137,6 @@ const PostManager: React.FC<PostManagerProps> = (props) => {
     );
   }
   if (result.isError) {
-    console.warn(result.error);
     return (
       <Stack
         flex={1}

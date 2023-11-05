@@ -1,9 +1,9 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Power } from '@tamagui/lucide-icons';
 import { useDispatch } from 'react-redux';
+
 import { RouteName } from '../navigations/models/common';
 import { RootStackParamList } from '../navigations/models/root';
-
 import { clearUser } from '../redux/slices/user';
 
 const HeaderRight = () => {
@@ -17,9 +17,7 @@ const HeaderRight = () => {
   };
 
   return (
-    <Power
-      onPress={onLogoutPress}
-    />
+    <Power onPress={onLogoutPress} />
   );
 };
 

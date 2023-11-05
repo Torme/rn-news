@@ -25,6 +25,7 @@ const store = configureStore({
   reducer: persistReducer(persistConfig, reducers),
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     serializableCheck: {
+      // redux-persist (6.x.x) actions are not serializable
       ignoredActions: ['persist/REHYDRATE', 'persist/PERSIST'],
     },
   })

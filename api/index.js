@@ -29,10 +29,6 @@ app.post('/login', (req, res) => {
   }
 })
 
-app.get('/home', (req, res) => {
-  res.status(200).json('Welcome, your app is working well');
-})
-
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

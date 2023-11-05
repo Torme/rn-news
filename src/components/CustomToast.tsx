@@ -1,6 +1,7 @@
 import { Toast, useToastState } from '@tamagui/toast';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack } from 'tamagui';
+
 import { SPACING } from '../constants';
 
 const DURATION_TOAST = 2000;

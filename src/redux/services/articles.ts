@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { KEY_NEWSAPI_1, KEY_NEWSAPI_2 } from '../../constants';
+import { KEY_NEWSAPI_1, KEY_NEWSAPI_2, URL_NEWSAPI } from '../../constants';
 import { ArticlesReturnType } from '../models/articles';
 
 const articlesApi = createApi({
   reducerPath: 'articlesApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://newsapi.org/v2' }),
+  baseQuery: fetchBaseQuery({ baseUrl: URL_NEWSAPI }),
   endpoints: (builder) => ({
     getAllArticlesBySearch:
       builder.query<ArticlesReturnType, { page?: number, search?: string, newKey?: boolean }>({

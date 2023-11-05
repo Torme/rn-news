@@ -41,7 +41,12 @@ const Home: React.FC<HomeProps> = (props) => {
   };
 
   return (
-    <YStack fullscreen justifyContent="center" alignItems="center" padding={SPACING}>
+    <YStack
+      fullscreen
+      justifyContent="center"
+      alignItems="center"
+      padding={SPACING}
+    >
       <XStack mb={SPACING}>
         <H2>Welcome to </H2>
         <RNNewsLogo />
