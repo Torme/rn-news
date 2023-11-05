@@ -88,4 +88,4 @@ To do:
 - [ ] Ability to save an article or a search in the favorites
 - [ ] Ability to create an alert when a new article is released on a search from the favorites
 - [ ] Ability to sort and filter the results of a search
-- [ ] Enhance design and create an unique identity
+- [ ] Enhance design
