@@ -165,19 +165,27 @@ const PostManager: React.FC<PostManagerProps> = (props) => {
           <Post article={item} />
         )}
         contentContainerStyle={styles.flatList}
-        ListHeaderComponent={<Spacer size={SPACING} />}
-        ListFooterComponent={isEndReached && (
+        ListHeaderComponent={<Spacer size={SPACING / 2} />}
+        ListFooterComponent={(isEndReached && (
           <Stack
             padding={SPACING}
-            paddingBottom={safeAreaInsets.bottom}
+            paddingBottom={safeAreaInsets.bottom + SPACING}
             alignItems="center"
           >
             <Text>You reached the end!</Text>
           </Stack>
+        )) || (
+          <Stack
+            padding={SPACING}
+            paddingBottom={safeAreaInsets.bottom + SPACING}
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Spinner />
+          </Stack>
         )}
         onScroll={handleScroll}
         onScrollBeginDrag={handleScrollBegin}
-        contentInsetAdjustmentBehavior="automatic"
         onEndReachedThreshold={0.2}
         onEndReached={loadNextPage}
       />

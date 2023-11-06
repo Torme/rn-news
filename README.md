@@ -81,7 +81,6 @@ The Vercel server is running at https://rn-news-pablogiraud-carrier-epitecheus-p
 # Status of the project
 
 To do:
-- [ ] Fix `onScrollToTopPress` (the scroll doesn't to the very top of the list)
 - [ ] Add a loading state to the Login button
 - [ ] Implement a real API
 - [ ] Add categories to the Home page to discover articles by category

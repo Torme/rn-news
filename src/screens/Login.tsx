@@ -54,7 +54,7 @@ const Login = () => {
       toastController.show(data.message);
       dispatch(setUser({ username }));
       resetInputs();
-      navigation.navigate(RouteName.SIGNEDIN);
+      navigation.reset({ index: 0, key: null, routes: [{ name: RouteName.SIGNEDIN }] });
     }
   }, [data, error]);
 
